@@ -1,6 +1,6 @@
-// Here we get task from input
+// Here we get all stored tasks
 function getTodos() {
-    // This creates array of input task
+    // This creates array of input tasks
     var todos = new Array;
     // We pull tasks from memory
     var todosStr = localStorage.getItem("todo");
@@ -11,7 +11,7 @@ function getTodos() {
     return todos;
 }
 
-// This fuction adds input function into getTodos array
+// This function adds input into localStorage array
 function add() {
     // I place input value into variable
     var task = document.getElementById("task").value;
@@ -39,10 +39,24 @@ function show() {
     html += "</ul>";
     //Here we display finished list
     document.getElementById("todos").innerHTML = html;
+    // Event listeners for each button
+    for(var i = 0; i < todos.length; i++) {
+    let index = i;
+    document.getElementById(i).addEventListener("click", function(){ deleteItem(index); });
+};
 }
 
 // This calls ADD after we click the button
 document.getElementById("add").addEventListener("click", add);
 show();
-// For troubleshooting
-console.log(html)
+
+
+
+
+// This function will delete list item
+function deleteItem(index){
+    var todos = getTodos();
+    todos.splice(index, 1);
+    localStorage.setItem("todo", JSON.stringify(todos));
+    show();
+}
